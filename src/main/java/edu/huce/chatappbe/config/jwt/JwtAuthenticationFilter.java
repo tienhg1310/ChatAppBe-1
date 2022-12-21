@@ -1,4 +1,4 @@
-package edu.huce.chatappbe.config;
+package edu.huce.chatappbe.config.jwt;
 
 import edu.huce.chatappbe.service.Users.UserService;
 import lombok.extern.slf4j.Slf4j;

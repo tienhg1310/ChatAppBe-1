@@ -1,7 +1,7 @@
 package edu.huce.chatappbe.controller.auth;
 
 
-import edu.huce.chatappbe.config.JwtTokenProvider;
+import edu.huce.chatappbe.config.jwt.JwtTokenProvider;
 import edu.huce.chatappbe.domain.Users.CustomUserDetails;
 import edu.huce.chatappbe.dto.auth.LoginRequest;
 import edu.huce.chatappbe.dto.auth.LoginResponse;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/auth/login")
+@RequestMapping("/auth")
 @CrossOrigin(origins = "*")
 public class AuthLoginController {
     @Autowired
@@ -25,7 +25,7 @@ public class AuthLoginController {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
-    @PostMapping
+    @PostMapping("/login")
     public LoginResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         // Xác thực từ username và password.
@@ -36,12 +36,14 @@ public class AuthLoginController {
                 )
         );
 
+
         // Nếu không xảy ra exception tức là thông tin hợp lệ
         // Set thông tin authentication vào Security Context
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Trả về jwt cho người dùng.
         String jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
+        
         return new LoginResponse(jwt);
     }
 

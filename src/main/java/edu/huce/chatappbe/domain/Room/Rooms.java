@@ -1,21 +1,17 @@
-package edu.huce.chatappbe.domain;
+package edu.huce.chatappbe.domain.Room;
 
 import edu.huce.chatappbe.domain.Users.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "room")
-public class Room {
+@Table(name = "rooms")
+public class Rooms {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -24,15 +20,16 @@ public class Room {
     @Column(name = "name", nullable = false)
     private String name;
 
+
     @Column(name = "type", nullable = false)
     private String type;
 
+    @ManyToOne
+    @JoinColumn(name = "creator")
+    private User user;
 
-    @Column(name = "createddate", nullable = false)
-    private String createddate;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "createdby", nullable = false)
-    private User creator;
+    @Column(name = "created_date", nullable = false)
+    private String createdDate;
 
 }

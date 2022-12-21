@@ -1,4 +1,4 @@
-package edu.huce.chatappbe.config;
+package edu.huce.chatappbe.config.jwt;
 
 import edu.huce.chatappbe.domain.Users.CustomUserDetails;
 import org.springframework.stereotype.Component;
