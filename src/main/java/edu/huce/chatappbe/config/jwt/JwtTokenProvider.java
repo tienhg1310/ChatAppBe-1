@@ -22,6 +22,7 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION);
         // Tạo chuỗi json web token từ id của user.
+        log.info("login");
         return Jwts.builder()
                 .setSubject(Long.toString(userDetails.getUser().getId()))
                 .setIssuedAt(now)
@@ -31,13 +32,13 @@ public class JwtTokenProvider {
     }
 
     // Lấy thông tin user từ jwt
-    public Long getUserIdFromJWT(String token) {
+    public Integer getUserIdFromJWT(String token) {
+
         Claims claims = Jwts.parser()
                 .setSigningKey(JWT_SECRET)
                 .parseClaimsJws(token)
                 .getBody();
-
-        return Long.parseLong(claims.getSubject());
+        return Integer.parseInt(claims.getSubject());
     }
 
     public boolean validateToken(String authToken) {

@@ -5,7 +5,7 @@ import edu.huce.chatappbe.domain.Users.User;
 import edu.huce.chatappbe.dto.auth.AuthRegisterDto;
 import edu.huce.chatappbe.repository.UserRepository;
 import edu.huce.chatappbe.service.MapValidationErrorService;
-import edu.huce.chatappbe.service.Users.UserService;
+import edu.huce.chatappbe.service.Users.UserAuthService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "*")
 public class AuthRegisterController {
     @Autowired
-    UserService userService;
+    UserAuthService userAuthService;
 
     @Autowired
     UserRepository userRepository;
@@ -41,12 +41,9 @@ public class AuthRegisterController {
             return responseEntity;
         }
 
-//        kiểm tra email đã tồn tại chưa ?
 
-        if (userRepository.existsByEmail(dto.getEmail())) {
-            return new ResponseEntity<>("{\"message\": \"Email is already taken!\"}", HttpStatus.BAD_REQUEST);
-        }
-        if (userRepository.existsByUsername(dto.getUsername())) {
+
+        if (userRepository.existsByName(dto.getName())) {
             return new ResponseEntity<>("{\"message\": \"Username is already taken!\"}", HttpStatus.BAD_REQUEST);
         }
 
@@ -55,7 +52,7 @@ public class AuthRegisterController {
         User user = new User();
         BeanUtils.copyProperties(dto, user);
 
-        user = userService.save(user);
+        user = userRepository.save(user);
 
         dto.setId(user.getId());
 

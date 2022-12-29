@@ -1,7 +1,7 @@
 package edu.huce.chatappbe.config.security;
 
 import edu.huce.chatappbe.config.jwt.JwtAuthenticationFilter;
-import edu.huce.chatappbe.service.Users.UserService;
+import edu.huce.chatappbe.service.Users.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -25,7 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserService userService;
+    UserAuthService userAuthService;
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.userDetailsService(userService) // Cung cáp userservice cho spring security
+        auth.userDetailsService(userAuthService) // Cung cáp userservice cho spring security
                 .passwordEncoder(passwordEncoder()); // cung cấp password encoder
     }
 
@@ -73,7 +73,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                     .disable()
                 .authorizeRequests()
-                    .antMatchers( "/data","/auth/**", "/h2-console/**","/stomp").permitAll() // Cho phép tất cả mọi người truy cập vào 2 địa chỉ này
+                    .antMatchers("/ws/**",
+//                            "/app/chat/**/**",
+//                            "/listmessage/**/**",
+//                            "/fetchAllUsers/**",
+//                            "/fetchAllGroups/**",
+//                            "/topic/**/**/**",
+                            "/auth/**").permitAll() // Cho phép tất cả mọi người truy cập vào 2 địa chỉ này
                 .anyRequest().authenticated(); // Tất cả các request khác đều cần phải xác thực mới được truy cập
 
         // Thêm một lớp Filter kiểm tra jwt

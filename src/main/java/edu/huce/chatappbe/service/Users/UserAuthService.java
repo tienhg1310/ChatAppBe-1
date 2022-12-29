@@ -5,8 +5,6 @@ import edu.huce.chatappbe.domain.Users.CustomUserDetails;
 import edu.huce.chatappbe.domain.Users.User;
 
 import edu.huce.chatappbe.repository.UserRepository;
-import lombok.AllArgsConstructor;
-
 
 
 import javax.transaction.Transactional;
@@ -19,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserAuthService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
@@ -37,7 +35,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         // Kiểm tra xem user có tồn tại trong database không?
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByName(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
@@ -45,7 +43,7 @@ public class UserService implements UserDetailsService {
     }
     // JWTAuthenticationFilter sẽ sử dụng hàm này
     @Transactional
-    public UserDetails loadUserById(Long id) {
+    public UserDetails loadUserById(Integer id) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new UsernameNotFoundException("User not found with id : " + id)
         );

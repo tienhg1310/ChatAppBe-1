@@ -11,11 +11,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import static edu.huce.chatappbe.domain.Users.UserStatus.Visible;
+
 
 
 @SpringBootApplication
-public class ChatAppBeApplication implements CommandLineRunner {
+public class ChatAppBeApplication  {
 
     public static void main(String[] args) {
         SpringApplication.run(ChatAppBeApplication.class, args);
@@ -28,19 +28,19 @@ public class ChatAppBeApplication implements CommandLineRunner {
     PasswordEncoder passwordEncoder;
 
 
-    @Override
-    public void run(String... args) throws Exception {
-        // Khi chương trình chạy
-        // Insert vào csdl một user.
-        User user = new User();
-        user.setUsername("tien2001");
-        user.setPassword(passwordEncoder.encode("tien2001"));
-        user.setName("PT");
-        user.setEmail("tienhg203@gmail.com");
-        user.setPhonenumber("0869318118");
-        user.setStatus(Visible);
-        userRepository.save(user);
-        System.out.println(user);
-    }
+//    @Override
+//    public void run(String... args) throws Exception {
+//        // Khi chương trình chạy
+//        // Insert vào csdl một user.
+//        User user = new User();
+//        user.setUsername("tien2001");
+//        user.setPassword(passwordEncoder.encode("tien2001"));
+//        user.setName("PT");
+//        user.setEmail("tienhg203@gmail.com");
+//        user.setPhonenumber("0869318118");
+//        user.setStatus(Visible);
+//        userRepository.save(user);
+//        System.out.println(user);
+//    }
 
 }

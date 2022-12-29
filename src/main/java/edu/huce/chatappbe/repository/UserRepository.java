@@ -5,16 +5,16 @@ import edu.huce.chatappbe.domain.Users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
-import java.util.Optional;
-
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
+public interface UserRepository extends JpaRepository<User, Integer> {
+    User findByName(String name);
 
-    public boolean existsByEmail(String email);
+    boolean existsByName(String name);
 
-    public boolean existsByUsername(String username);
+
+
+
+
 
 
 }
