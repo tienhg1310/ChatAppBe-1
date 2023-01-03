@@ -20,7 +20,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/auth/login")
 @CrossOrigin(origins = "*")
 public class AuthLoginController {
     @Autowired
@@ -31,7 +31,7 @@ public class AuthLoginController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/login")
+    @PostMapping()
     public LoginResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         // Xác thực từ username và password.

@@ -1,12 +1,16 @@
 package edu.huce.chatappbe.controller.MessageController;
 
 
+
+import edu.huce.chatappbe.domain.Messages.GroupMessage;
 import edu.huce.chatappbe.domain.Messages.Message;
 import edu.huce.chatappbe.dto.auth.LoginRequest;
 import edu.huce.chatappbe.dto.messages.MessageDto;
 import edu.huce.chatappbe.dto.messages.MessageGroupDto;
 import edu.huce.chatappbe.service.Messages.MessagesService;
 import edu.huce.chatappbe.service.UserAndGroupService.UserAndGroupService;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -18,6 +22,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
+@Slf4j
 public class MessageController {
 
     @Autowired
@@ -31,10 +36,6 @@ public class MessageController {
         messageService.sendMessage(to, message);
     }
 
-    @PostMapping("chat/{to}")
-    public void postMessage(@PathVariable("to") String to, @Valid @RequestBody MessageDto message) {
-        messageService.sendMessage(to, message);
-    }
 
     @GetMapping("listmessage/{from}/{to}")
     public List<Message> getListMessageChat(@PathVariable("from") Integer from, @PathVariable("to") Integer to) {
@@ -43,12 +44,15 @@ public class MessageController {
 
     @MessageMapping("/chat/group/{to}")
     public void sendMessageToGroup(@DestinationVariable Integer to, MessageGroupDto message) {
-        messageService.sendMessageGroup(to, message);
-
+         messageService.sendMessageGroup(to, message);
     }
 
+    //    @GetMapping("listmessage/group/{groupid}")
+//    public List<Map<String, Object>> getListMessageGroupChat(@PathVariable("groupid") Integer groupid) {
+//        return messageService.getListMessageGroups(groupid);
+//    }
     @GetMapping("listmessage/group/{groupid}")
-    public List<Map<String, Object>> getListMessageGroupChat(@PathVariable("groupid") Integer groupid) {
+    public List<GroupMessage> getListMessageGroupChat(@PathVariable("groupid") Integer groupid) {
         return messageService.getListMessageGroups(groupid);
     }
 

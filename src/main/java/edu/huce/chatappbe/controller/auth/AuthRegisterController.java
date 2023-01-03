@@ -41,8 +41,6 @@ public class AuthRegisterController {
             return responseEntity;
         }
 
-
-
         if (userRepository.existsByName(dto.getName())) {
             return new ResponseEntity<>("{\"message\": \"Username is already taken!\"}", HttpStatus.BAD_REQUEST);
         }

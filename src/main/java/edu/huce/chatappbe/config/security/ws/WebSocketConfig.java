@@ -1,4 +1,4 @@
-package edu.huce.chatappbe.config.ws;
+package edu.huce.chatappbe.config.security.ws;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
